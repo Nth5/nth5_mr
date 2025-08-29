@@ -8,41 +8,54 @@ import CONFIG from './config'
  * @returns
  */
 const Style = () => {
-  // 从配置中获取主题色，如果没有配置则使用默认值 #A6B0E0
-  const themeColor = siteConfig('HEXO_THEME_COLOR', '#A6B0E0', CONFIG)
+  const themeColor = siteConfig('HEXO_THEME_COLOR', '#928CEE', CONFIG)
 
   return (
     <style jsx global>{`
       :root {
-        --theme-color: ${themeColor}; /* 中蓝色，主要主题色 */
-        --theme-accent: #7D7BB8;      /* 深蓝紫色，用于强调 */
-        --bg-main: #FFF5E9;           /* 浅米色，主背景 */
-        --bg-card: #C9D1F0;           /* 浅蓝色，卡片背景 */
+        --theme-color: ${themeColor};
+        --bg-main: #faf7f2; /* 浅米色背景 */
+        --bg-card: #e0e4fa; /* 浅蓝紫色卡片 */
+        --text-main: #1a1a1a;
+        --text-sub: #555;
       }
 
-      /* 底色 */
+      /* 整体背景 */
       #theme-hexo body {
         background-color: var(--bg-main);
       }
       .dark #theme-hexo body {
-        background-color: #1a1a1a;
+        background-color: #0d0d0d;
       }
 
-      /* 卡片效果 */
-      #theme-hexo .post-card,
-      #theme-hexo .card {
-        background-color: var(--bg-card);
+      /* 侧边栏和小组件背景 */
+      #theme-hexo .card,
+      #theme-hexo .widget {
+        background: var(--bg-card) !important;
         border-radius: 12px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
       }
 
-      /* 标签样式 */
-      #theme-hexo .tag {
-        background-color: var(--theme-color);
-        color: white;
+      /* 文章正文背景 */
+      #theme-hexo .notion {
+        background: var(--bg-main);
+      }
+
+      /* 文章摘要块背景 */
+      #theme-hexo .notion-page,
+      #theme-hexo .notion-block,
+      #theme-hexo .notion-collection-card {
+        background: var(--bg-card);
+        border-radius: 12px;
+        padding: 8px;
+      }
+
+      /* 引用块和代码块 */
+      #theme-hexo .notion-quote,
+      #theme-hexo pre {
+        background: var(--bg-card);
+        border-left: 4px solid var(--theme-color);
         border-radius: 8px;
-        padding: 2px 8px;
-        font-size: 0.85rem;
+        padding: 8px 12px;
       }
 
       /* 菜单下划线动画 */
@@ -57,15 +70,18 @@ const Style = () => {
         background-size: 0 2px;
         transition: background-size 100ms ease-in-out;
       }
+
       #theme-hexo .menu-link:hover {
         background-size: 100% 2px;
-        color: var(--theme-accent);
+        color: var(--theme-color);
       }
 
       /* 文章列表中标题行悬浮时的文字颜色 */
-      #theme-hexo h2:hover .menu-link,
+      #theme-hexo h2:hover .menu-link {
+        color: var(--theme-color) !important;
+      }
       .dark #theme-hexo h2:hover .menu-link {
-        color: var(--theme-accent) !important;
+        color: var(--theme-color) !important;
       }
 
       /* 下拉菜单悬浮背景色 */
@@ -75,7 +91,7 @@ const Style = () => {
 
       /* tag标签悬浮背景色 */
       #theme-hexo a[class*='hover:bg-indigo-400']:hover {
-        background-color: var(--theme-accent) !important;
+        background-color: var(--theme-color) !important;
       }
 
       /* 社交按钮悬浮颜色 */
@@ -88,7 +104,7 @@ const Style = () => {
 
       /* MenuGroup 悬浮颜色 */
       #theme-hexo #nav div[class*='hover:text-indigo-600']:hover {
-        color: var(--theme-accent) !important;
+        color: var(--theme-color) !important;
       }
       .dark #theme-hexo #nav div[class*='dark:hover:text-indigo-400']:hover {
         color: var(--theme-color) !important;
@@ -97,7 +113,7 @@ const Style = () => {
       /* 最新发布文章悬浮颜色 */
       #theme-hexo div[class*='hover:text-indigo-600']:hover,
       #theme-hexo div[class*='hover:text-indigo-400']:hover {
-        color: var(--theme-accent) !important;
+        color: var(--theme-color) !important;
       }
 
       /* 分页组件颜色 */
@@ -111,13 +127,19 @@ const Style = () => {
         background-color: var(--theme-color) !important;
         color: white !important;
       }
-      #theme-hexo div[class*='hover:bg-indigo-400']:hover,
-      #theme-hexo .hover\:bg-indigo-400:hover,
+
+      /* 移动设备下，搜索组件中选中分类的高亮背景色 */
+      #theme-hexo div[class*='hover:bg-indigo-400']:hover {
+        background-color: var(--theme-color) !important;
+      }
+      #theme-hexo .hover\:bg-indigo-400:hover {
+        background-color: var(--theme-color) !important;
+      }
       #theme-hexo .bg-indigo-400 {
         background-color: var(--theme-color) !important;
       }
       #theme-hexo a[class*='hover:bg-indigo-600']:hover {
-        background-color: var(--theme-accent) !important;
+        background-color: var(--theme-color) !important;
         color: white !important;
       }
 
@@ -131,7 +153,7 @@ const Style = () => {
 
       /* 移动设备菜单栏选中背景色 */
       #theme-hexo div[class*='hover:bg-indigo-500']:hover {
-        background-color: var(--theme-accent) !important;
+        background-color: var(--theme-color) !important;
       }
 
       /* 文章浏览进度条颜色 */
@@ -149,15 +171,18 @@ const Style = () => {
       .dark #theme-hexo .dark\:text-indigo-400 {
         color: var(--theme-color) !important;
       }
-      .dark #theme-hexo .dark\:border-indigo-400,
+      .dark #theme-hexo .dark\:border-indigo-400 {
+        border-color: var(--theme-color) !important;
+      }
       .dark #theme-hexo .dark\:border-white {
         border-color: var(--theme-color) !important;
       }
 
       /* 目录项悬浮时的字体颜色 */
       #theme-hexo a[class*='hover:text-indigo-800']:hover {
-        color: var(--theme-accent) !important;
+        color: var(--theme-color) !important;
       }
+
       /* 深色模式下目录项的默认文字颜色和边框线颜色 */
       .dark #theme-hexo .catalog-item {
         color: white !important;
@@ -166,9 +191,10 @@ const Style = () => {
       .dark #theme-hexo .catalog-item:hover {
         color: var(--theme-color) !important;
       }
+
       /* 深色模式下当前高亮标题的边框线颜色 */
       .dark #theme-hexo .catalog-item.font-bold {
-        border-color: var(--theme-accent) !important;
+        border-color: var(--theme-color) !important;
       }
 
       /* 文章底部版权声明组件左侧边框线颜色 */
@@ -183,19 +209,23 @@ const Style = () => {
 
       /* 自定义右键菜单悬浮高亮颜色 */
       #theme-hexo .hover\:bg-blue-600:hover {
-        background-color: var(--theme-accent) !important;
+        background-color: var(--theme-color) !important;
       }
       .dark #theme-hexo li[class*='dark:hover:border-indigo-300']:hover {
         border-color: var(--theme-color) !important;
       }
+
+      /* 深色模式下，归档页面文章列表项默认状态左侧边框线颜色 */
       .dark #theme-hexo li[class*='dark:border-indigo-400'] {
         border-color: var(--theme-color) !important;
       }
+
+      /* 深色模式下，归档页面文章标题悬浮时的文字颜色 */
       .dark #theme-hexo a[class*='dark:hover:text-indigo-300']:hover {
         color: var(--theme-color) !important;
       }
 
-      /* header 渐变遮罩 */
+      /* Header cover 渐变遮罩 */
       #theme-hexo .header-cover::before {
         content: '';
         position: absolute;
@@ -213,7 +243,7 @@ const Style = () => {
         );
       }
 
-      /* footer 隐藏 */
+      /* Footer 隐藏 */
       .tk-footer {
         opacity: 0;
       }
@@ -232,11 +262,11 @@ const Style = () => {
         background: transparent;
       }
       ::-webkit-scrollbar-thumb {
-        background-color: var(--theme-accent);
+        background-color: var(--theme-color);
       }
       * {
         scrollbar-width: thin;
-        scrollbar-color: var(--theme-accent) transparent;
+        scrollbar-color: var(--theme-color) transparent;
       }
     `}</style>
   )
