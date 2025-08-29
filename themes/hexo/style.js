@@ -9,19 +9,19 @@ import CONFIG from './config'
  */
 const Style = () => {
   // 从配置中获取主题色，如果没有配置则使用默认值 #928CEE
-  const themeColor = siteConfig('HEXO_THEME_COLOR', '#928CEE', CONFIG)
+  const themeColor = siteConfig('HEXO_THEME_COLOR', 'FAF9EE', CONFIG)
 
   return (
     <style jsx global>{`
       :root {
         --theme-color: ${themeColor};
-        --link-color: #898AC4;
-        --link-hover-color: #C0C9EE;
+        --link-color: #A2AF9B;
+        --link-hover-color: #DCCFC0;
       }
 
       // 底色
       #theme-hexo body {
-        background-color: #FAF7F3; /* 改为您想要的背景色 */
+        background-color: #FAF9EE; /* 改为您想要的背景色 */
       }
       .dark #theme-hexo body {
         background-color: black;
